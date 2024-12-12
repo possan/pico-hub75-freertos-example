@@ -371,5 +371,7 @@ void demo_init()
     demo_nextupdatetime = 0;
     demo_frame = 0;
 
-    xTaskCreate(demoTask, "demo", 2048, NULL, tskIDLE_PRIORITY + 3, NULL);
+    TaskHandle_t task;
+    xTaskCreate(demoTask, "demo", 2048, NULL, tskIDLE_PRIORITY + 3, &task);
+    // vTaskCoreAffinitySet(task, 1 << 0);
 }

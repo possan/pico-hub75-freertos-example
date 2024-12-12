@@ -57,7 +57,7 @@ void wifiTask(void *tmp)
         return;
     }
 
-        printf("initialised\n");
+    printf("initialised\n");
 
     cyw43_wifi_pm(&cyw43_state, CYW43_PERFORMANCE_PM);
     cyw43_arch_enable_sta_mode();
@@ -191,5 +191,7 @@ void wifiTask(void *tmp)
 
 void wifi_init()
 {
-    xTaskCreate(wifiTask, "wifi", 4096, NULL, tskIDLE_PRIORITY + 2, NULL);
+    TaskHandle_t task;
+    xTaskCreate(wifiTask, "wifi", 4096, NULL, tskIDLE_PRIORITY + 2, &task);
+    // vTaskCoreAffinitySet(task, 1 << 0);
 }

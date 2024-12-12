@@ -28,10 +28,27 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
-// #define configNUMBER_OF_CORES 1
 
 // This example uses a common include to avoid repetition
 #include "FreeRTOSConfig_examples_common.h"
+
+// #define configNUMBER_OF_CORES 1
+// From: https://community.element14.com/products/raspberry-pi/b/blog/posts/raspberry-pico---play-with-multi-core-freertos-smp
+// #define configUSE_CORE_AFFINITY 1
+// #define configTICK_CORE 0
+// #define configRUN_MULTIPLE_PRIORITIES 0
+// #define configUSE_PASSIVE_IDLE_HOOK 0
+// #define configSUPPORT_PICO_SYNC_INTEROP 1
+// #define configSUPPORT_PICO_TIME_INTEROP 1
+
+#define configGENERATE_RUN_TIME_STATS 1
+#define configUSE_TRACE_FACILITY 1
+#define configUSE_STATS_FORMATTING_FUNCTIONS 1
+
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS()
+extern uint64_t time_us_64(void);						// "hardware/timer.h"
+#define RUN_TIME_STAT_time_us_64Divider 1000			// stat granularity is mS
+#define portGET_RUN_TIME_COUNTER_VALUE() (time_us_64()/RUN_TIME_STAT_time_us_64Divider)	// runtime counter in mS
 
 #endif /* FREERTOS_CONFIG_H */
 

@@ -15,18 +15,18 @@ static char freertosstats[2000] = {
 
 uint32_t wifi_connected_time = 0;
 
-// void debugTask(void *tmp)
-// {
-//     while (true)
-//     {
-//         vTaskDelay(10000);
+void debugTask(void *tmp)
+{
+    while (true)
+    {
+        vTaskDelay(10000);
 
-//         vTaskGetRunTimeStatistics((char *)&freertosstats, 2000);
-//         portYIELD();
+        vTaskGetRunTimeStatistics((char *)&freertosstats, 2000);
+        portYIELD();
 
-//         printf("FreeRTOS Stats:\n%s\n", freertosstats);
-//     }
-// }
+        printf("FreeRTOS Stats:\n%s\n", freertosstats);
+    }
+}
 
 void vLaunch( void) {
     vTaskStartScheduler();
@@ -41,7 +41,9 @@ int main()
 
     leds_init();
 
-    // xTaskCreate(debugTask, "debug", 2048, NULL, tskIDLE_PRIORITY + 1, NULL);
+    TaskHandle_t task;
+    xTaskCreate(debugTask, "debug", 2048, NULL, tskIDLE_PRIORITY + 1, &task);
+    // vTaskCoreAffinitySet(task, 1 << 0);
 
     //
     // draw some test graphics on panel

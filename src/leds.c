@@ -147,5 +147,5 @@ void leds_init()
 
     TaskHandle_t task;
     xTaskCreate(ledTask, "leds", 4096, NULL, tskIDLE_PRIORITY + 10, &task);
-    // vTaskSetAffinity(task, 1);
+    // vTaskSetAffinity(task, 1 << 1);
 }
